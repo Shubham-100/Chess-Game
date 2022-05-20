@@ -16,6 +16,15 @@ def load_images(screen):
         IMAGES[piece] = pg.image.load("images/" + piece + ".png")
 
 
+# def write_coordinates():
+#     font = pg.font.SysFont('Garamond', 30)
+#     text = font.render('GeeksForGeeks', True, pg.Color("green"), pg.Color("blue"))
+#
+
+def make_move(move):
+    pass
+
+
 def main():
     # Initialize pygame and set up drawing canvas
     pg.init()
@@ -25,23 +34,41 @@ def main():
     load_images(screen)
 
     # Game loop
+
     running = True
+    click_count = 0
+    move = []
 
     while running:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
                 running = False
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                click_count += 1  # to determine if it's the first click or the second
+
+                if click_count % 2 == 1:  # empty the list since a pair of move has been played
+                    move.clear()
+
+                x, y = pg.mouse.get_pos()
+                row = x // SQUARE_SIZE
+                col = y // SQUARE_SIZE
+                move.append((col, row))
+                print(move)
+
+                if click_count == 2:
+                    make_move(move)
 
         clock.tick(FPS)
         draw_board(screen)
+        # write_coordinates()
         pg.display.flip()
         pg.display.update()
 
 
 def draw_board(screen):
     # Draw chess board
-    board_color = [pg.Color("white"), (181, 136, 99)]
+    board_color = [pg.Color("white"), pg.Color("brown")]
 
     for r in range(8):
         for c in range(8):
