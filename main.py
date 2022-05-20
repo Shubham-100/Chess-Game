@@ -9,7 +9,7 @@ IMAGES = {}
 
 
 # Load Images once and store them for later use
-def load_images(screen):
+def load_images():
     pieces = ["bp", "bR", "bN", "bB", "bQ", "bK", "wp", "wR", "wN", "wB", "wQ", "wK"]
 
     for piece in pieces:
@@ -19,10 +19,7 @@ def load_images(screen):
 # def write_coordinates():
 #     font = pg.font.SysFont('Garamond', 30)
 #     text = font.render('GeeksForGeeks', True, pg.Color("green"), pg.Color("blue"))
-#
-
-def make_move(move):
-    pass
+#.
 
 
 def main():
@@ -31,7 +28,7 @@ def main():
     screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pg.display.set_caption("Chess Masters")
     clock = pg.time.Clock()
-    load_images(screen)
+    load_images()
 
     # Game loop
 
@@ -54,10 +51,11 @@ def main():
                 row = x // SQUARE_SIZE
                 col = y // SQUARE_SIZE
                 move.append((col, row))
-                print(move)
+                engine = Engine()
+                print(move, engine.notation[move[0]])
 
-                if click_count == 2:
-                    make_move(move)
+                if click_count % 2 == 0:
+                    make_move(screen, move)
 
         clock.tick(FPS)
         draw_board(screen)
@@ -83,6 +81,14 @@ def draw_board(screen):
             piece = eng.board[r][c]  # get current state board and draws it
             if piece != "##":
                 screen.blit(IMAGES[piece], pg.Rect(c*SQUARE_SIZE, r*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+
+
+def make_move(screen, move):
+    start = move[0]
+    to = move[1]
+    # find the piece placed at start coordinate and blit it to "to" coordinate
+    print(start, to)
+    screen.blit(IMAGES["wK"], pg.Rect(to[0] * SQUARE_SIZE, to[1] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
 
 if __name__ == '__main__':
