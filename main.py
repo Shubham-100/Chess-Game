@@ -16,12 +16,6 @@ def load_images():
         IMAGES[piece] = pg.image.load("images/" + piece + ".png")
 
 
-# def write_coordinates():
-#     font = pg.font.SysFont('Garamond', 30)
-#     text = font.render('GeeksForGeeks', True, pg.Color("green"), pg.Color("blue"))
-#.
-
-
 def main():
     # Initialize pygame and set up drawing canvas
     pg.init()
@@ -59,9 +53,7 @@ def main():
 
         clock.tick(FPS)
         draw_board(screen)
-        # write_coordinates()
         pg.display.flip()
-        pg.display.update()
 
 
 def draw_board(screen):
@@ -87,9 +79,13 @@ def make_move(screen, move):
     start = move[0]
     to = move[1]
     # find the piece placed at start coordinate and blit it to "to" coordinate
-    print(start, to)
-    screen.blit(IMAGES["wK"], pg.Rect(to[0] * SQUARE_SIZE, to[1] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+    eng = Engine()
+    print(eng.board[start[0]][start[1]], "moved")
+    screen.blit(IMAGES[eng.board[start[0]][start[1]]], (to[1] * SQUARE_SIZE, to[0] * SQUARE_SIZE))
+    pg.display.update()
 
+
+    #update the board list after move is made
 
 if __name__ == '__main__':
     main()
