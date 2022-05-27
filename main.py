@@ -83,7 +83,12 @@ def make_move(screen, move):
     # find the piece placed at start coordinate and blit it to "to" coordinate
     eng = Engine()
     print(eng.board[start[0]][start[1]], "moved")
+
+    # remove the image from starting coordinate and move it to destination coordinate
     screen.blit(IMAGES[eng.board[start[0]][start[1]]], (to[1] * SQUARE_SIZE, to[0] * SQUARE_SIZE))
+    board_color = [pg.Color("white"), pg.Color("brown")]
+    color = board_color[(start[0] + start[1]) % 2]
+    pg.draw.rect(screen, color, (start[1] * SQUARE_SIZE, start[0] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
     pg.display.update()
 
     #update the board list after move is made
