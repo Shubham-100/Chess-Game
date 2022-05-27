@@ -1,6 +1,8 @@
 
 class Engine:
 
+    whoz_move = "white"
+
     notation = {
         (0, 0): "a8",
         (0, 1): "b8",
