@@ -1,6 +1,6 @@
 import pygame as pg
 from engine import Engine
-
+import time
 # Constants
 SCREEN_WIDTH = SCREEN_HEIGHT = 512
 SQUARE_SIZE = SCREEN_WIDTH//8
@@ -30,6 +30,10 @@ def main():
     click_count = 0
     move = []
 
+    clock.tick(FPS)
+    draw_board(screen)
+    pg.display.flip()
+
     while running:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -51,9 +55,7 @@ def main():
                 if click_count % 2 == 0:
                     make_move(screen, move)
 
-        clock.tick(FPS)
-        draw_board(screen)
-        pg.display.flip()
+
 
 
 def draw_board(screen):
@@ -83,7 +85,6 @@ def make_move(screen, move):
     print(eng.board[start[0]][start[1]], "moved")
     screen.blit(IMAGES[eng.board[start[0]][start[1]]], (to[1] * SQUARE_SIZE, to[0] * SQUARE_SIZE))
     pg.display.update()
-
 
     #update the board list after move is made
 
