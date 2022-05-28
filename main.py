@@ -21,10 +21,8 @@ def load_images():
 #read current board state
 def piece_color(col, row):
     if eng.board[col][row].startswith('w'):
-        #eng.whoz_move = "white"
         return "white"
     elif eng.board[col][row].startswith('b'):
-        #eng.whoz_move = "black"
         return "black"
 
 
@@ -105,11 +103,12 @@ def make_move(screen, move):
     # find the piece placed at start coordinate and blit it to "to" coordinate
 
     # remove the image from starting coordinate and move it to destination coordinate
-    screen.blit(IMAGES[eng.board[start[0]][start[1]]], (to[1] * SQUARE_SIZE, to[0] * SQUARE_SIZE))
-
     board_color = [pg.Color("white"), pg.Color("brown")]
-    color = board_color[(start[0] + start[1]) % 2]
-    pg.draw.rect(screen, color, (start[1] * SQUARE_SIZE, start[0] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+    color_start = board_color[(start[0] + start[1]) % 2]
+    color_to = board_color[(to[0] + to[1]) % 2]
+    pg.draw.rect(screen, color_start, (start[1] * SQUARE_SIZE, start[0] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+    pg.draw.rect(screen, color_to, (to[1] * SQUARE_SIZE, to[0] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+    screen.blit(IMAGES[eng.board[start[0]][start[1]]], (to[1] * SQUARE_SIZE, to[0] * SQUARE_SIZE))
     pg.display.update()
 
     #update the board list after move is made
@@ -118,6 +117,7 @@ def make_move(screen, move):
 
     # after playing a move, toggle the player
     toggle_player()
+
 
 if __name__ == '__main__':
     main()
